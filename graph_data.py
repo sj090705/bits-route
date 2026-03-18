@@ -165,7 +165,7 @@ def _slot(hhmm: str) -> int:
     return (h * 60 + m) // 15
 
 # Zone member lists (used to expand slot entries)
-_Z1 = ["LTC", "FD1", "Library", "Food Ministry", "Srinivasa Bhawan","New Workshop", "Vishwakarma Bhawan", "PIEDS", "Lecture Theatre Complex"]
+_Z1 = ["Lecture Theatre Complex", "FD1", "Library", "Food Ministry", "Srinivasa Bhawan","New Workshop", "Vishwakarma Bhawan", "PIEDS",]
 _Z1_ACADEMIC = ["Lecture Theatre Complex", "FD1", "Srinivasa Bhawan", "Vishwakarma Bhawan"]
 _Z1_FULL = ["Lecture Theatre Complex", "FD1", "Food Ministry","Srinivasa Bhawan", "Vishwakarma Bhawan","New Workshop", "Library"]
 
