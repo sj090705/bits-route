@@ -150,6 +150,7 @@ EDGES = [
 
     ("Main Gate", "Vfast", 89.12),
     ("Vfast", "Ashok Bhawan", 134.94),
+    ("SAC", "Looters", 74.84),
 ]
 
 """Congestion schedule for L3 
