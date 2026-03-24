@@ -11,24 +11,24 @@ COORDINATES = {
     "Meera Bhawan": (28.357125, 75.585593),
     "Ram Bhawan": (28.36230,  75.58636),
     "Budh Bhawan":(28.360722, 75.586769),
-    "Krishna Bhawan":(28.36273,  75.58838),
-    "Gandhi Bhawan":(28.36112,  75.58841),
+    "Krishna Bhawan":(28.362567, 75.588079),
+    "Gandhi Bhawan":(28.361026, 75.588324),
     "Shankar Bhawan": (28.359770, 75.588494),
     "Vyas Bhawan":(28.358299, 75.588800),
     "Saraswati Temple":(28.358129, 75.587979),
-    "Bhagirath Bhawan":(28.36146,  75.58960),
-    "Vishwakarma Bhawan": (28.36294,  75.58924),
-    "CVR Bhawan":(28.36156,  75.59107),
+    "Bhagirath Bhawan":(28.361138, 75.589277),
+    "Vishwakarma Bhawan": (28.362687, 75.589040),
+    "CVR Bhawan":(28.361886, 75.590986),
     "Malviya Bhawan": (28.361601, 75.585337),
     "Srinivasa Bhawan": (28.365601, 75.587347),
     "PIEDS":(28.36616,  75.58771),
     "Library":(28.365336, 75.588434),
     "Rana Pratap Bhawan":(28.362947, 75.590724),
-    "Ashok Bhawan":(28.361347, 75.590787),
+    "Ashok Bhawan":(28.361389, 75.590938),
     "Lecture Theatre Complex":(28.365110, 75.589873),
     "FD1":(28.364287, 75.588781),
-    "FD2": (28.363674, 75.588143),
-    "FD3":(28.363420, 75.585924),
+    "FD2": (28.363570, 75.587770),
+    "FD3":(28.363390, 75.586383),
     "Food Ministry":(28.36489,  75.58826),
     "New Workshop": (28.365325, 75.587931),
     "All Night Canteen":(28.360141, 75.589384),
@@ -49,108 +49,116 @@ COORDINATES = {
 # Graph is UNDIRECTED — every edge is traversable in both directions.
 # Distances are Haversine-verified straight-line values between GPS coords
 EDGES = [
-    ("Clock Tower", "FD2", 118.77),
-    ("Clock Tower", "FD3", 134.10),
-    ("Clock Tower", "Food Ministry", 146.90),
+    ("Clock Tower", "FD2", 94.03),
+    ("Clock Tower", "FD3", 103.54),
 
     ("Meera Bhawan", "Birla Shishu Vihar", 166.53),
+    ("Birla Shishu Vihar", "Birla Balika Vidyapeeth", 243.46),
 
     ("Ram Bhawan", "Budh Bhawan", 179.97),
-    ("Ram Bhawan", "Krishna Bhawan", 203.35),
+    ("Ram Bhawan", "Krishna Bhawan", 170.80),
     ("Ram Bhawan", "Malviya Bhawan", 126.73),
-    ("Ram Bhawan", "FD3", 131.64),
+    ("Ram Bhawan", "FD3", 121.22),
     ("Ram Bhawan", "NAB", 90.19),
+    ("Ram Bhawan", "Looters", 127.67),
+    ("Ram Bhawan", "BET-TACT", 101.46),
 
-    ("Budh Bhawan", "Gandhi Bhawan", 166.56),
+    ("Budh Bhawan", "Gandhi Bhawan", 155.86),
     ("Budh Bhawan", "SAC", 97.92),
     ("Budh Bhawan", "Looters", 128.73),
     ("Budh Bhawan", "Birla Balika Vidyapeeth", 131.46),
     ("Budh Bhawan", "NAB", 177.11),
-    
-    ("Krishna Bhawan", "Gandhi Bhawan", 179.05),
-    ("Krishna Bhawan", "Vishwakarma Bhawan", 87.33),
-    ("Krishna Bhawan", "FD1", 177.52),
-    ("Krishna Bhawan", "FD2", 107.50),
-    ("Krishna Bhawan", "NAB", 120.14),
-    
-    ("Gandhi Bhawan", "Shankar Bhawan", 150.34),
-    ("Gandhi Bhawan", "Bhagirath Bhawan", 122.42),
-    ("Gandhi Bhawan", "Vishwakarma Bhawan", 218.06),
-    ("Gandhi Bhawan", "All Night Canteen", 144.68),
-    ("Gandhi Bhawan", "Birla Balika Vidyapeeth", 223.05),
-    ("Gandhi Bhawan", "NAB", 167.37),
-    
+    ("Budh Bhawan", "Shankar Bhawan", 199.24),
+
+    ("Krishna Bhawan", "Gandhi Bhawan", 173.02),
+    ("Krishna Bhawan", "Vishwakarma Bhawan", 94.97),
+    ("Krishna Bhawan", "FD1", 203.22),
+    ("Krishna Bhawan", "FD2", 115.55),
+    ("Krishna Bhawan", "NAB", 85.76),
+
+    ("Gandhi Bhawan", "Shankar Bhawan", 140.65),
+    ("Gandhi Bhawan", "Bhagirath Bhawan", 94.08),
+    ("Gandhi Bhawan", "Vishwakarma Bhawan", 197.54),
+    ("Gandhi Bhawan", "All Night Canteen", 142.97),
+    ("Gandhi Bhawan", "Birla Balika Vidyapeeth", 209.63),
+    ("Gandhi Bhawan", "NAB", 170.17),
+
     ("Shankar Bhawan", "Vyas Bhawan", 166.29),
     ("Shankar Bhawan", "All Night Canteen", 96.36),
-    
+    ("Shankar Bhawan", "Birla Balika Vidyapeeth", 149.67),
+
     ("Vyas Bhawan", "Saraswati Temple", 82.53),
     ("Vyas Bhawan", "Akshay Supermarket", 170.81),
-    
+    ("Vyas Bhawan", "All Night Canteen", 212.64),
+
     ("Saraswati Temple", "Birla Balika Vidyapeeth", 186.07),
     ("Saraswati Temple", "Birla Shishu Vihar", 108.40),
 
-    ("Bhagirath Bhawan", "Vishwakarma Bhawan", 168.30),
-    ("Bhagirath Bhawan", "CVR Bhawan", 144.27),
-    ("Bhagirath Bhawan", "Rana Pratap Bhawan", 198.58),
-    ("Bhagirath Bhawan", "Ashok Bhawan", 116.82),
-    ("Bhagirath Bhawan", "All Night Canteen", 148.18),
-    
-    ("Vishwakarma Bhawan", "CVR Bhawan", 235.82),
-    ("Vishwakarma Bhawan", "Rana Pratap Bhawan", 145.21),
-    ("Vishwakarma Bhawan", "Ashok Bhawan", 233.00),
-    ("Vishwakarma Bhawan", "FD1", 156.37),
-    ("Vishwakarma Bhawan", "FD2", 134.84),
-    
-    ("CVR Bhawan", "Rana Pratap Bhawan", 157.90),
-    ("CVR Bhawan", "Ashok Bhawan", 36.44), # shortest edge
-    
+    ("Bhagirath Bhawan", "Vishwakarma Bhawan", 173.80),
+    ("Bhagirath Bhawan", "CVR Bhawan", 186.76),
+    ("Bhagirath Bhawan", "Rana Pratap Bhawan", 245.98),
+    ("Bhagirath Bhawan", "Ashok Bhawan", 164.90),
+    ("Bhagirath Bhawan", "All Night Canteen", 111.35),
+
+    ("Vishwakarma Bhawan", "CVR Bhawan", 210.21),
+    ("Vishwakarma Bhawan", "Rana Pratap Bhawan", 167.29),
+    ("Vishwakarma Bhawan", "Ashok Bhawan", 235.20),
+    ("Vishwakarma Bhawan", "FD1", 179.71),
+    ("Vishwakarma Bhawan", "FD2", 158.37),
+
+    ("CVR Bhawan", "Rana Pratap Bhawan", 120.73),
+    ("CVR Bhawan", "Ashok Bhawan", 55.46),  # shortest edge
+
     ("Library", "Lecture Theatre Complex", 143.02),
     ("Library", "FD1", 121.48),
-    ("Library", "Food Ministry", 52.43), # 2nd shortest edge
-    
+    ("Library", "Food Ministry", 52.43),  # 2nd shortest edge
+    ("Library", "PIEDS", 115.82),
+
     ("Rana Pratap Bhawan", "Lecture Theatre Complex", 254.52),
     ("Rana Pratap Bhawan", "FD1", 241.55),
-    ("Rana Pratap Bhawan", "FD2", 265.16),
-    
-    ("Malviya Bhawan", "FD3", 210.26),
-    ("Malviya Bhawan", "SAC", 111.86),
+    ("Rana Pratap Bhawan", "FD2", 297.22),
+
+    ("Malviya Bhawan", "FD3", 223.71),
     ("Malviya Bhawan", "Looters", 42.79),
-    
+    ("Malviya Bhawan", "BET-TACT", 133.12),
+
     ("Srinivasa Bhawan", "PIEDS", 71.59),
     ("Srinivasa Bhawan", "Library", 110.36),
-    ("Srinivasa Bhawan", "Lecture Theatre Complex", 253.11),
-    ("Srinivasa Bhawan", "Food Ministry", 119.29),
     ("Srinivasa Bhawan", "New Workshop", 64.86),
-    
+
     ("PIEDS", "Library", 115.82),
-    ("PIEDS", "Lecture Theatre Complex", 241.71),
     ("PIEDS", "New Workshop", 95.33),
-    
-    ("FD3", "BET-TACT", 82.03),
-    
+
+    ("FD3", "BET-TACT", 110.18),
+
     ("Food Ministry", "New Workshop", 58.10),
-    
-    ("Ashok Bhawan", "All Night Canteen", 191.91),
-    
+
+    ("Ashok Bhawan", "All Night Canteen", 205.86),
+
     ("Lecture Theatre Complex", "Food Ministry", 159.71),
     ("Lecture Theatre Complex", "New Workshop", 191.51),
-    
-    ("FD1", "FD2", 92.43),
+
+    ("FD1", "FD2", 127.05),
     ("FD1", "Food Ministry", 84.23),
     ("FD1", "New Workshop", 142.26),
-    
-    ("FD2", "Food Ministry", 135.70),
-    ("FD2", "NAB", 179.45),
+    ("FD1", "Lecture Theatre Complex", 140.68),
+
+    ("FD2", "Food Ministry", 154.41),
+    ("FD2", "NAB", 154.41),
 
     ("All Night Canteen", "SAC", 358.49),
     ("All Night Canteen", "Birla Balika Vidyapeeth", 243.71),
     ("All Night Canteen", "Vfast", 276.79),
+    ("All Night Canteen", "Akshay Supermarket", 337.48),
 
     ("Akshay Supermarket", "Cnot", 179.63),
 
     ("Main Gate", "Vfast", 89.12),
-    ("Vfast", "Ashok Bhawan", 134.94),
-    ("SAC", "Looters", 74.84),
+    ("Vfast", "Ashok Bhawan", 123.21),
+    ("Vfast", "Cnot", 525.32),
+    ("Vfast", "SAC", 617.42),
+    ("Ashok Bhawan", "Cnot", 577.23),
+    ("SAC", "Looters", 74.83),
 ]
 
 """Congestion schedule for L3 
