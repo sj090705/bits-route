@@ -42,6 +42,11 @@ COORDINATES = {
     "NAB": (28.36225,  75.58728),
     "Main Gate": (28.361022, 75.592976),
     "Vfast":(28.360911, 75.592074),
+    "Gandhi Statue": (28.360181, 75.586938),
+    "Patel Statue": (28.360383, 75.588402),
+    "ANC Circle": (28.360499, 75.589268),
+    "Ashok Circle": (28.360752, 75.591100),
+    "Mandir Meera Intersection":(28.358046, 75.587324),
 }
 
 # EDGES
@@ -49,116 +54,170 @@ COORDINATES = {
 # Graph is UNDIRECTED — every edge is traversable in both directions.
 # Distances are Haversine-verified straight-line values between GPS coords
 EDGES = [
-    ("Clock Tower", "FD2", 94.03),
-    ("Clock Tower", "FD3", 103.54),
-
-    ("Meera Bhawan", "Birla Shishu Vihar", 166.53),
-    ("Birla Shishu Vihar", "Birla Balika Vidyapeeth", 243.46),
-
-    ("Ram Bhawan", "Budh Bhawan", 179.97),
-    ("Ram Bhawan", "Krishna Bhawan", 170.80),
-    ("Ram Bhawan", "Malviya Bhawan", 126.73),
-    ("Ram Bhawan", "FD3", 121.22),
-    ("Ram Bhawan", "NAB", 90.19),
-    ("Ram Bhawan", "Looters", 127.67),
-    ("Ram Bhawan", "BET-TACT", 101.46),
-
-    ("Budh Bhawan", "Gandhi Bhawan", 155.86),
-    ("Budh Bhawan", "SAC", 97.92),
-    ("Budh Bhawan", "Looters", 128.73),
-    ("Budh Bhawan", "Birla Balika Vidyapeeth", 131.46),
-    ("Budh Bhawan", "NAB", 177.11),
-    ("Budh Bhawan", "Shankar Bhawan", 199.24),
-
-    ("Krishna Bhawan", "Gandhi Bhawan", 173.02),
-    ("Krishna Bhawan", "Vishwakarma Bhawan", 94.97),
-    ("Krishna Bhawan", "FD1", 203.22),
-    ("Krishna Bhawan", "FD2", 115.55),
-    ("Krishna Bhawan", "NAB", 85.76),
-
-    ("Gandhi Bhawan", "Shankar Bhawan", 140.65),
-    ("Gandhi Bhawan", "Bhagirath Bhawan", 94.08),
-    ("Gandhi Bhawan", "Vishwakarma Bhawan", 197.54),
-    ("Gandhi Bhawan", "All Night Canteen", 142.97),
-    ("Gandhi Bhawan", "Birla Balika Vidyapeeth", 209.63),
-    ("Gandhi Bhawan", "NAB", 170.17),
-
-    ("Shankar Bhawan", "Vyas Bhawan", 166.29),
-    ("Shankar Bhawan", "All Night Canteen", 96.36),
-    ("Shankar Bhawan", "Birla Balika Vidyapeeth", 149.67),
-
-    ("Vyas Bhawan", "Saraswati Temple", 82.53),
-    ("Vyas Bhawan", "Akshay Supermarket", 170.81),
-    ("Vyas Bhawan", "All Night Canteen", 212.64),
-
-    ("Saraswati Temple", "Birla Balika Vidyapeeth", 186.07),
-    ("Saraswati Temple", "Birla Shishu Vihar", 108.40),
-
-    ("Bhagirath Bhawan", "Vishwakarma Bhawan", 173.80),
-    ("Bhagirath Bhawan", "CVR Bhawan", 186.76),
-    ("Bhagirath Bhawan", "Rana Pratap Bhawan", 245.98),
-    ("Bhagirath Bhawan", "Ashok Bhawan", 164.90),
-    ("Bhagirath Bhawan", "All Night Canteen", 111.35),
-
-    ("Vishwakarma Bhawan", "CVR Bhawan", 210.21),
-    ("Vishwakarma Bhawan", "Rana Pratap Bhawan", 167.29),
-    ("Vishwakarma Bhawan", "Ashok Bhawan", 235.20),
-    ("Vishwakarma Bhawan", "FD1", 179.71),
-    ("Vishwakarma Bhawan", "FD2", 158.37),
-
-    ("CVR Bhawan", "Rana Pratap Bhawan", 120.73),
-    ("CVR Bhawan", "Ashok Bhawan", 55.46),  # shortest edge
-
-    ("Library", "Lecture Theatre Complex", 143.02),
-    ("Library", "FD1", 121.48),
-    ("Library", "Food Ministry", 52.43),  # 2nd shortest edge
-    ("Library", "PIEDS", 115.82),
-
-    ("Rana Pratap Bhawan", "Lecture Theatre Complex", 254.52),
-    ("Rana Pratap Bhawan", "FD1", 241.55),
-    ("Rana Pratap Bhawan", "FD2", 297.22),
-
-    ("Malviya Bhawan", "FD3", 223.71),
-    ("Malviya Bhawan", "Looters", 42.79),
-    ("Malviya Bhawan", "BET-TACT", 133.12),
-
-    ("Srinivasa Bhawan", "PIEDS", 71.59),
-    ("Srinivasa Bhawan", "Library", 110.36),
-    ("Srinivasa Bhawan", "New Workshop", 64.86),
-
-    ("PIEDS", "Library", 115.82),
-    ("PIEDS", "New Workshop", 95.33),
-
-    ("FD3", "BET-TACT", 110.18),
-
-    ("Food Ministry", "New Workshop", 58.10),
-
-    ("Ashok Bhawan", "All Night Canteen", 205.86),
-
-    ("Lecture Theatre Complex", "Food Ministry", 159.71),
-    ("Lecture Theatre Complex", "New Workshop", 191.51),
-
-    ("FD1", "FD2", 127.05),
-    ("FD1", "Food Ministry", 84.23),
-    ("FD1", "New Workshop", 142.26),
-    ("FD1", "Lecture Theatre Complex", 140.68),
-
-    ("FD2", "Food Ministry", 154.41),
-    ("FD2", "NAB", 154.41),
-
-    ("All Night Canteen", "SAC", 358.49),
-    ("All Night Canteen", "Birla Balika Vidyapeeth", 243.71),
-    ("All Night Canteen", "Vfast", 276.79),
-    ("All Night Canteen", "Akshay Supermarket", 337.48),
-
-    ("Akshay Supermarket", "Cnot", 179.63),
-
-    ("Main Gate", "Vfast", 89.12),
-    ("Vfast", "Ashok Bhawan", 123.21),
-    ("Vfast", "Cnot", 525.32),
-    ("Vfast", "SAC", 617.42),
-    ("Ashok Bhawan", "Cnot", 577.23),
-    ("SAC", "Looters", 74.83),
+ 
+    # ── Akshay Supermarket ───────────────────────────────────────────────────
+    ("Akshay Supermarket", "Cnot",                      179.63),
+    ("Akshay Supermarket", "Vyas Bhawan",               170.81),
+ 
+    # ── All Night Canteen ────────────────────────────────────────────────────
+    ("All Night Canteen", "Akshay Supermarket",         337.48),
+    ("All Night Canteen", "Vyas Bhawan",                212.64),
+ 
+    # ── ANC Circle  (junction node — connects ANC, Bhagirath, Patel, Ashok Circle)
+    ("ANC Circle", "All Night Canteen",                  41.39),
+    ("ANC Circle", "Bhagirath Bhawan",                   71.06),
+    ("ANC Circle", "Patel Statue",                       85.71),
+    ("ANC Circle", "Ashok Circle",                      181.45),
+ 
+    # ── Ashok Bhawan ─────────────────────────────────────────────────────────
+    ("Ashok Bhawan", "Bhagirath Bhawan",                164.90),
+    ("Ashok Bhawan", "CVR Bhawan",                       55.46),  # shortest edge
+ 
+    # ── Ashok Circle  (junction node — connects Ashok Bhawan, Vfast, Cnot)
+    ("Ashok Circle", "Ashok Bhawan",                     72.58),
+    ("Ashok Circle", "Vfast",                            96.93),
+    ("Ashok Circle", "Cnot",                            505.37),
+ 
+    # ── BET-TACT ─────────────────────────────────────────────────────────────
+    ("BET-TACT", "FD3",                                 110.18),
+    ("BET-TACT", "Malviya Bhawan",                      133.12),
+    ("BET-TACT", "Ram Bhawan",                          101.46),
+ 
+    # ── Bhagirath Bhawan ─────────────────────────────────────────────────────
+    ("Bhagirath Bhawan", "CVR Bhawan",                  186.76),
+    ("Bhagirath Bhawan", "Gandhi Bhawan",                94.08),
+    ("Bhagirath Bhawan", "Rana Pratap Bhawan",          245.98),
+    ("Bhagirath Bhawan", "Vishwakarma Bhawan",          173.80),
+ 
+    # ── Birla Balika Vidyapeeth ──────────────────────────────────────────────
+    ("Birla Balika Vidyapeeth", "Birla Shishu Vihar",   243.46),
+    ("Birla Balika Vidyapeeth", "Budh Bhawan",          131.46),
+    ("Birla Balika Vidyapeeth", "Gandhi Bhawan",        209.63),
+    ("Birla Balika Vidyapeeth", "Shankar Bhawan",       149.67),
+ 
+    # ── Birla Shishu Vihar ───────────────────────────────────────────────────
+    ("Birla Shishu Vihar", "Meera Bhawan",              166.53),
+ 
+    # ── Budh Bhawan ──────────────────────────────────────────────────────────
+    ("Budh Bhawan", "Gandhi Bhawan",                    155.86),
+    ("Budh Bhawan", "Looters",                          128.73),
+    ("Budh Bhawan", "NAB",                              177.11),
+    ("Budh Bhawan", "Ram Bhawan",                       179.97),
+    ("Budh Bhawan", "SAC",                               97.92),
+    ("Budh Bhawan", "Shankar Bhawan",                   199.24),
+ 
+    # ── Clock Tower ──────────────────────────────────────────────────────────
+    ("Clock Tower", "FD2",                               94.03),
+    ("Clock Tower", "FD3",                              103.54),
+ 
+    # ── CVR Bhawan ───────────────────────────────────────────────────────────
+    ("CVR Bhawan", "Rana Pratap Bhawan",                120.73),
+    ("CVR Bhawan", "Vishwakarma Bhawan",                210.21),
+ 
+    # ── FD1 ──────────────────────────────────────────────────────────────────
+    ("FD1", "FD2",                                      127.05),
+    ("FD1", "Food Ministry",                             84.23),
+    ("FD1", "Krishna Bhawan",                           203.22),
+    ("FD1", "Lecture Theatre Complex",                  140.68),
+    ("FD1", "Library",                                  121.48),
+    ("FD1", "New Workshop",                             142.26),
+    ("FD1", "Rana Pratap Bhawan",                       241.55),
+    ("FD1", "Vishwakarma Bhawan",                       179.71),
+ 
+    # ── FD2 ──────────────────────────────────────────────────────────────────
+    ("FD2", "Food Ministry",                            154.41),
+    ("FD2", "Krishna Bhawan",                           115.55),
+    ("FD2", "NAB",                                      154.41),
+    ("FD2", "Rana Pratap Bhawan",                       297.22),
+    ("FD2", "Vishwakarma Bhawan",                       158.37),
+ 
+    # ── FD3 ──────────────────────────────────────────────────────────────────
+    ("FD3", "Malviya Bhawan",                           223.71),
+    ("FD3", "Ram Bhawan",                               121.22),
+ 
+    # ── Food Ministry ────────────────────────────────────────────────────────
+    ("Food Ministry", "Lecture Theatre Complex",        159.71),
+    ("Food Ministry", "New Workshop",                    58.10),
+ 
+    # ── Gandhi Bhawan ────────────────────────────────────────────────────────
+    ("Gandhi Bhawan", "Krishna Bhawan",                 173.02),
+    ("Gandhi Bhawan", "NAB",                            170.17),
+    ("Gandhi Bhawan", "Vishwakarma Bhawan",             197.54),
+ 
+    # ── Gandhi Statue  (junction node — connects SAC, Birla Balika, Budh)
+    ("Gandhi Statue", "Birla Balika Vidyapeeth",         69.75),
+    ("Gandhi Statue", "Budh Bhawan",                     62.39),
+    ("Gandhi Statue", "SAC",                            126.56),
+ 
+    # ── Krishna Bhawan ───────────────────────────────────────────────────────
+    ("Krishna Bhawan", "NAB",                            85.76),
+    ("Krishna Bhawan", "Ram Bhawan",                    170.80),
+    ("Krishna Bhawan", "Vishwakarma Bhawan",             94.97),
+ 
+    # ── Lecture Theatre Complex ──────────────────────────────────────────────
+    ("Lecture Theatre Complex", "New Workshop",         191.51),
+    ("Lecture Theatre Complex", "Rana Pratap Bhawan",   254.52),
+ 
+    # ── Library ──────────────────────────────────────────────────────────────
+    ("Library", "Food Ministry",                         52.43),  # 2nd shortest edge
+    ("Library", "Lecture Theatre Complex",              143.02),
+    ("Library", "PIEDS",                                115.82),
+    ("Library", "Srinivasa Bhawan",                     110.36),
+ 
+    # ── Looters ──────────────────────────────────────────────────────────────
+    ("Looters", "Malviya Bhawan",                        42.79),  # shortest edge
+    ("Looters", "SAC",                                   74.83),
+ 
+    # ── Main Gate ────────────────────────────────────────────────────────────
+    ("Main Gate", "Vfast",                               89.12),
+ 
+    # ── Malviya Bhawan ───────────────────────────────────────────────────────
+    ("Malviya Bhawan", "Ram Bhawan",                    126.73),
+ 
+    # ── Mandir Meera Intersection
+    ("Mandir Meera Intersection", "Birla Balika Vidyapeeth", 171.06),
+    ("Mandir Meera Intersection", "Birla Shishu Vihar",  74.24),
+    ("Mandir Meera Intersection", "Saraswati Temple",    64.75),
+ 
+    # ── Meera Bhawan ─────────────────────────────────────────────────────────
+    # (all edges listed under other nodes)
+ 
+    # ── NAB ──────────────────────────────────────────────────────────────────
+    ("NAB", "Ram Bhawan",                                90.19),
+ 
+    # ── Patel Statue  (junction node — connects Gandhi Bhawan, Shankar, Gandhi Statue, ANC Circle)
+    ("Patel Statue", "Gandhi Bhawan",                    71.90),
+    ("Patel Statue", "Gandhi Statue",                   145.00),
+    ("Patel Statue", "Shankar Bhawan",                   68.75),
+ 
+    # ── PIEDS ────────────────────────────────────────────────────────────────
+    ("PIEDS", "New Workshop",                            95.33),
+    ("PIEDS", "Srinivasa Bhawan",                        71.59),
+ 
+    # ── Ram Bhawan ───────────────────────────────────────────────────────────
+    # (all edges listed under other nodes)
+ 
+    # ── Rana Pratap Bhawan ───────────────────────────────────────────────────
+    # (all edges listed under other nodes)
+ 
+    # ── Saraswati Temple ─────────────────────────────────────────────────────
+    ("Saraswati Temple", "Vyas Bhawan",                  82.53),
+ 
+    # ── Shankar Bhawan ───────────────────────────────────────────────────────
+    ("Shankar Bhawan", "Vyas Bhawan",                   166.29),
+ 
+    # ── Srinivasa Bhawan ─────────────────────────────────────────────────────
+    ("Srinivasa Bhawan", "New Workshop",                 64.86),
+ 
+    # ── Vfast ────────────────────────────────────────────────────────────────
+    # (all edges listed under other nodes)
+ 
+    # ── Vishwakarma Bhawan ───────────────────────────────────────────────────
+    ("Vishwakarma Bhawan", "Ashok Bhawan",              235.20),
+    ("Vishwakarma Bhawan", "Rana Pratap Bhawan",        167.29),
+ 
+    # ── Vyas Bhawan ──────────────────────────────────────────────────────────
+    # (all edges listed under other nodes)
 ]
 
 """Congestion schedule for L3 
