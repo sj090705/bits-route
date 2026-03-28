@@ -238,12 +238,14 @@ def user_benchmark(graph, stops, dep_time):
     SRC, DST = stops[0], stops[-1]
     r_bfs = bfs(graph, SRC, DST)
     r_ucs = ucs(graph, SRC, DST)
-    r_gr  = greedy(graph, SRC, DST, "haversine")
-    r_ah  = astar(graph, SRC, DST, "haversine")
+    r_gr_h  = greedy(graph, SRC, DST, "haversine")
+    r_gr_e  = greedy(graph, SRC, DST, "euclidean")
+    r_ah_h  = astar(graph, SRC, DST, "haversine")
+    r_ah_e  = astar(graph, SRC, DST, "euclidean")
     r_td  = td_astar(graph, SRC, DST, departure_hhmm=dep_time)
 
-    results = [r_bfs, r_ucs, r_gr, r_ah, r_td]
-
+    results = [r_bfs, r_ucs, r_gr_h, r_gr_e, r_ah_h, r_ah_e, r_td]
+    
     for r in results:
         p(f"  {r.algorithm:<25} exp={r.nodes_expanded:>3}  "
           f"cost={r.cost:>8.1f} m  hops={len(r.path)-1}")
