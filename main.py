@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from campus_graph import CampusGraph
 from algorithms import bfs, ucs, greedy, astar, td_astar
 from visualisation import (draw_graph, plot_comparison, plot_empirical_vs_theory)
-from empirical_validation import run_validation, THEORY
+from empirical_validation import run_valid, THEORY
 from collections import defaultdict
 
 OUT = "outputs"
