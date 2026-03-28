@@ -30,6 +30,7 @@ ALGO_COLORS = {
     "Greedy (haversine)": "#FFE62C",   # yellow
     "Greedy (euclidean)": "#FF8F32",   # orange
     "A* (haversine)":     "#A51FBD",   # purple
+    "A* (euclidean)":     "#E91E8C",   # pink
 }
 
 NODE_DEFAULT = "#BBDEFB"
