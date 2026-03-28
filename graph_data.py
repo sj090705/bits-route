@@ -1,9 +1,3 @@
-# graph_data.py
-# Sparse Weighted Undirected Graph of the BITS Pilani campus.
-# Node and edge counts are computed dynamically by GRAPH_STATS at the bottom.
-#
-# All edge weights are in METRES.
-# All coordinates are (latitude, longitude) in decimal degrees.
 
 COORDINATES = {
     "Clock Tower":               (28.36412,  75.58704),
@@ -48,168 +42,147 @@ COORDINATES = {
     "Mandir Meera Intersection": (28.358046, 75.587324),
 }
 
-# ─────────────────────────────────────────────────────────────────────────────
-# EDGES
-# Each tuple: ("Node A", "Node B", distance_in_metres)
-# Graph is UNDIRECTED — every edge is traversable in both directions.
-# Distances are Haversine-verified straight-line values between GPS coords.
-#
-# ORGANISATION: One block per node, listed alphabetically.
-#   • Each edge appears exactly ONCE — under the alphabetically first endpoint.
-#   • Nodes whose edges are all owned by their neighbours keep a placeholder
-#     comment so you always know the node is accounted for.
-#
-# To add a new node  → add a COORDINATES entry + a new block here (alpha order).
-# To add a new edge  → put it under whichever endpoint comes first alphabetically.
-# To remove an edge  → delete the single line in the first endpoint's block.
-# ─────────────────────────────────────────────────────────────────────────────
-
 EDGES = [
 
-    # ── Akshay Supermarket ───────────────────────────────────────────────────
-    ("Akshay Supermarket", "Cnot",                       179.63),
-    ("Akshay Supermarket", "Vyas Bhawan",                170.81),
+    # ── Akshay Supermarket
+    ("Akshay Supermarket", "Cnot", 179.63),
+    ("Akshay Supermarket", "Vyas Bhawan", 170.81),
 
-    # ── All Night Canteen ────────────────────────────────────────────────────
-    ("All Night Canteen", "Akshay Supermarket",          337.48),
-    ("All Night Canteen", "Vyas Bhawan",                 212.64),
+    # ── All Night Canteen
+    ("All Night Canteen", "Akshay Supermarket", 337.48),
+    ("All Night Canteen", "Vyas Bhawan", 212.64),
 
-    # ── ANC Circle  (junction — connects ANC, Bhagirath, Patel Statue, Ashok Circle)
-    ("ANC Circle", "All Night Canteen",                   41.39),
-    ("ANC Circle", "Ashok Circle",                       181.45),
-    ("ANC Circle", "Bhagirath Bhawan",                    71.06),
-    ("ANC Circle", "Patel Statue",                        85.71),
+    # ── ANC Circle
+    ("ANC Circle", "All Night Canteen", 41.39),
+    ("ANC Circle", "Ashok Circle", 181.45),
+    ("ANC Circle", "Bhagirath Bhawan", 71.06),
+    ("ANC Circle", "Patel Statue", 85.71),
 
-    # ── Ashok Bhawan ─────────────────────────────────────────────────────────
-    ("Ashok Bhawan", "Bhagirath Bhawan",                 164.90),
-    ("Ashok Bhawan", "CVR Bhawan",                        55.46),  # shortest edge
+    # ── Ashok Bhawan
+    ("Ashok Bhawan", "Bhagirath Bhawan", 164.90),
+    ("Ashok Bhawan", "CVR Bhawan", 55.46),  # shortest edge
 
-    # ── Ashok Circle  (junction — connects Ashok Bhawan, Vfast, Cnot) ───────
-    ("Ashok Circle", "Ashok Bhawan",                      72.58),
-    ("Ashok Circle", "Cnot",                             505.37),
-    ("Ashok Circle", "Vfast",                             96.93),
+    # ── Ashok Circle
+    ("Ashok Circle", "Ashok Bhawan", 72.58),
+    ("Ashok Circle", "Cnot", 505.37),
+    ("Ashok Circle", "Vfast", 96.93),
 
-    # ── BET-TACT ─────────────────────────────────────────────────────────────
-    ("BET-TACT", "FD3",                                  110.18),
-    ("BET-TACT", "Malviya Bhawan",                       133.12),
-    ("BET-TACT", "Ram Bhawan",                           101.46),
+    # ── BET-TACT
+    ("BET-TACT", "FD3", 110.18),
+    ("BET-TACT", "Malviya Bhawan", 133.12),
+    ("BET-TACT", "Ram Bhawan", 101.46),
 
-    # ── Bhagirath Bhawan ─────────────────────────────────────────────────────
-    ("Bhagirath Bhawan", "CVR Bhawan",                   186.76),
-    ("Bhagirath Bhawan", "Gandhi Bhawan",                 94.08),
-    ("Bhagirath Bhawan", "Rana Pratap Bhawan",           245.98),
-    ("Bhagirath Bhawan", "Vishwakarma Bhawan",           173.80),
+    # ── Bhagirath Bhawan
+    ("Bhagirath Bhawan", "CVR Bhawan", 186.76),
+    ("Bhagirath Bhawan", "Gandhi Bhawan", 94.08),
+    ("Bhagirath Bhawan", "Rana Pratap Bhawan", 245.98),
+    ("Bhagirath Bhawan", "Vishwakarma Bhawan", 173.80),
 
-    # ── Birla Shishu Vihar ───────────────────────────────────────────────────
-    ("Birla Shishu Vihar", "Meera Bhawan",               166.53),
+    # ── Birla Shishu Vihar
+    ("Birla Shishu Vihar", "Meera Bhawan", 166.53),
 
-    # ── Budh Bhawan ──────────────────────────────────────────────────────────
-    ("Budh Bhawan", "Looters",                           128.73),
-    ("Budh Bhawan", "NAB",                               177.11),
-    ("Budh Bhawan", "Ram Bhawan",                        179.97),
-    ("Budh Bhawan", "SAC",                                97.92),
+    # ── Budh Bhawan
+    ("Budh Bhawan", "Looters", 128.73),
+    ("Budh Bhawan", "NAB", 177.11),
+    ("Budh Bhawan", "Ram Bhawan", 179.97),
+    ("Budh Bhawan", "SAC", 97.92),
 
-    # ── Clock Tower ──────────────────────────────────────────────────────────
-    ("Clock Tower", "FD2",                                94.03),
-    ("Clock Tower", "FD3",                               103.54),
+    # ── Clock Tower
+    ("Clock Tower", "FD2", 94.03),
+    ("Clock Tower", "FD3", 103.54),
 
-    # ── CVR Bhawan ───────────────────────────────────────────────────────────
-    ("CVR Bhawan", "Rana Pratap Bhawan",                 120.73),
-    ("CVR Bhawan", "Vishwakarma Bhawan",                 210.21),
+    # ── CVR Bhawan
+    ("CVR Bhawan", "Rana Pratap Bhawan", 120.73),
+    ("CVR Bhawan", "Vishwakarma Bhawan", 210.21),
 
-    # ── FD1 ──────────────────────────────────────────────────────────────────
-    ("FD1", "FD2",                                       127.05),
-    ("FD1", "Food Ministry",                              84.23),
-    ("FD1", "Krishna Bhawan",                            203.22),
-    ("FD1", "Lecture Theatre Complex",                   140.68),
-    ("FD1", "Library",                                   121.48),
-    ("FD1", "New Workshop",                              142.26),
-    ("FD1", "Rana Pratap Bhawan",                        241.55),
-    ("FD1", "Vishwakarma Bhawan",                        179.71),
+    # ── FD1
+    ("FD1", "FD2", 127.05),
+    ("FD1", "Food Ministry", 84.23),
+    ("FD1", "Krishna Bhawan", 203.22),
+    ("FD1", "Lecture Theatre Complex", 140.68),
+    ("FD1", "Library", 121.48),
+    ("FD1", "New Workshop", 142.26),
+    ("FD1", "Rana Pratap Bhawan", 241.55),
+    ("FD1", "Vishwakarma Bhawan", 179.71),
 
-    # ── FD2 ──────────────────────────────────────────────────────────────────
-    ("FD2", "Food Ministry",                             154.41),
-    ("FD2", "Krishna Bhawan",                            115.55),
-    ("FD2", "NAB",                                       154.41),
-    ("FD2", "Rana Pratap Bhawan",                        297.22),
-    ("FD2", "Vishwakarma Bhawan",                        158.37),
+    # ── FD2
+    ("FD2", "Food Ministry", 154.41),
+    ("FD2", "Krishna Bhawan", 115.55),
+    ("FD2", "NAB", 154.41),
+    ("FD2", "Rana Pratap Bhawan", 297.22),
+    ("FD2", "Vishwakarma Bhawan", 158.37),
 
-    # ── FD3 ──────────────────────────────────────────────────────────────────
-    ("FD3", "Malviya Bhawan",                            223.71),
-    ("FD3", "Ram Bhawan",                                121.22),
+    # ── FD3
+    ("FD3", "Malviya Bhawan", 223.71),
+    ("FD3", "Ram Bhawan", 121.22),
 
-    # ── Food Ministry ────────────────────────────────────────────────────────
-    ("Food Ministry", "Lecture Theatre Complex",         159.71),
-    ("Food Ministry", "New Workshop",                     58.10),
+    # ── Food Ministry
+    ("Food Ministry", "Lecture Theatre Complex", 159.71),
+    ("Food Ministry", "New Workshop", 58.10),
 
-    # ── Gandhi Bhawan ────────────────────────────────────────────────────────
-    ("Gandhi Bhawan", "Krishna Bhawan",                  173.02),
-    ("Gandhi Bhawan", "NAB",                             170.17),
-    ("Gandhi Bhawan", "Vishwakarma Bhawan",              197.54),
+    # ── Gandhi Bhawan
+    ("Gandhi Bhawan", "Krishna Bhawan", 173.02),
+    ("Gandhi Bhawan", "NAB", 170.17),
+    ("Gandhi Bhawan", "Vishwakarma Bhawan", 197.54),
 
-    # ── Gandhi Statue  (junction — connects SAC, Birla Balika, Budh) ─────────
-    ("Gandhi Statue", "Birla Balika Vidyapeeth",          69.75),
-    ("Gandhi Statue", "Budh Bhawan",                      62.39),
-    ("Gandhi Statue", "SAC",                             126.56),
+    # ── Gandhi Statue
+    ("Gandhi Statue", "Birla Balika Vidyapeeth", 69.75),
+    ("Gandhi Statue", "Budh Bhawan", 62.39),
+    ("Gandhi Statue", "SAC", 126.56),
 
-    # ── Krishna Bhawan ───────────────────────────────────────────────────────
-    ("Krishna Bhawan", "NAB",                             85.76),
-    ("Krishna Bhawan", "Ram Bhawan",                     170.80),
-    ("Krishna Bhawan", "Vishwakarma Bhawan",              94.97),
+    # ── Krishna Bhawan
+    ("Krishna Bhawan", "NAB", 85.76),
+    ("Krishna Bhawan", "Ram Bhawan", 170.80),
+    ("Krishna Bhawan", "Vishwakarma Bhawan", 94.97),
 
-    # ── Lecture Theatre Complex ──────────────────────────────────────────────
-    ("Lecture Theatre Complex", "New Workshop",          191.51),
-    ("Lecture Theatre Complex", "Rana Pratap Bhawan",    254.52),
+    # ── Lecture Theatre Complex 
+    ("Lecture Theatre Complex", "New Workshop", 191.51),
+    ("Lecture Theatre Complex", "Rana Pratap Bhawan", 254.52),
 
-    # ── Library ──────────────────────────────────────────────────────────────
-    ("Library", "Food Ministry",                          52.43),  # 2nd shortest edge
-    ("Library", "Lecture Theatre Complex",               143.02),
-    ("Library", "PIEDS",                                 115.82),
-    ("Library", "Srinivasa Bhawan",                      110.36),
+    # ── Library 
+    ("Library", "Food Ministry", 52.43),  # 2nd shortest edge
+    ("Library", "Lecture Theatre Complex", 143.02),
+    ("Library", "PIEDS", 115.82),
+    ("Library", "Srinivasa Bhawan", 110.36),
 
-    # ── Looters ──────────────────────────────────────────────────────────────
-    ("Looters", "Malviya Bhawan",                         42.79),  # shortest edge
-    ("Looters", "SAC",                                    74.83),
+    # ── Looters
+    ("Looters", "Malviya Bhawan", 42.79),  # shortest edge
+    ("Looters", "SAC", 74.83),
 
-    # ── Main Gate ────────────────────────────────────────────────────────────
-    ("Main Gate", "Vfast",                                89.12),
+    # ── Main Gate
+    ("Main Gate", "Vfast", 89.12),
 
-    # ── Malviya Bhawan ───────────────────────────────────────────────────────
-    ("Malviya Bhawan", "Ram Bhawan",                     126.73),
+    # ── Malviya Bhawan
+    ("Malviya Bhawan", "Ram Bhawan", 126.73),
 
-    # ── Mandir Meera Intersection  (junction — connects girls hostel cluster) ─
+    # ── Mandir Meera Intersection
     ("Mandir Meera Intersection", "Birla Balika Vidyapeeth", 171.06),
-    ("Mandir Meera Intersection", "Birla Shishu Vihar",   74.24),
-    ("Mandir Meera Intersection", "Saraswati Temple",     64.75),
+    ("Mandir Meera Intersection", "Birla Shishu Vihar", 74.24),
+    ("Mandir Meera Intersection", "Saraswati Temple", 64.75),
 
-    # ── Meera Bhawan ─────────────────────────────────────────────────────────
+    # ── Meera Bhawan
     # (all edges listed under other nodes)
 
-    # ── NAB ──────────────────────────────────────────────────────────────────
-    ("NAB", "Ram Bhawan",                                 90.19),
+    # ── NAB
+    ("NAB", "Ram Bhawan", 90.19),
 
-    # ── Patel Statue  (junction — connects Gandhi Bhawan, Shankar, Gandhi Statue)
-    ("Patel Statue", "Gandhi Bhawan",                     71.90),
-    ("Patel Statue", "Gandhi Statue",                    145.00),
-    ("Patel Statue", "Shankar Bhawan",                    68.75),
+    # ── Patel Statue
+    ("Patel Statue", "Gandhi Bhawan", 71.90),
+    ("Patel Statue", "Gandhi Statue", 145.00),
+    ("Patel Statue", "Shankar Bhawan", 68.75),
 
-    # ── PIEDS ────────────────────────────────────────────────────────────────
-    ("PIEDS", "New Workshop",                             95.33),
-    ("PIEDS", "Srinivasa Bhawan",                         71.59),
+    # ── PIEDS
+    ("PIEDS", "New Workshop", 95.33),
+    ("PIEDS", "Srinivasa Bhawan", 71.59),
 
-    # ── Vishwakarma Bhawan ───────────────────────────────────────────────────
-    ("Vishwakarma Bhawan", "Ashok Bhawan",               235.20),
-    ("Vishwakarma Bhawan", "Rana Pratap Bhawan",         167.29),
+    # ── Vishwakarma Bhawan
+    ("Vishwakarma Bhawan", "Ashok Bhawan", 235.20),
+    ("Vishwakarma Bhawan", "Rana Pratap Bhawan", 167.29),
 
 ]
 
-# ─────────────────────────────────────────────────────────────────────────────
 # CONGESTION SCHEDULE
-# Format : { time_slot_index: {node_name: k_factor} }
-# Slot index = floor(minutes_since_midnight / 15)
-# Slot 0 = 00:00–00:14 … Slot 95 = 23:45–23:59
 # Only non-1.0 (congested) slots are listed; all others default to k = 1.0.
-# ─────────────────────────────────────────────────────────────────────────────
 
 def _slot(hhmm: str) -> int:
     """Convert 'HH:MM' string to 15-min slot index (0–95)."""
@@ -217,9 +190,8 @@ def _slot(hhmm: str) -> int:
     return (h * 60 + m) // 15
 
 
-# ── Zone node lists ───────────────────────────────────────────────────────────
+# Zone node lists
 # Used as shorthand when applying congestion to groups of nodes.
-# Every node name here must exist in COORDINATES.
 
 _Z1_ACADEMIC = [                        # academic buildings — class-change rush
     "Lecture Theatre Complex", "FD1", "Srinivasa Bhawan", "Vishwakarma Bhawan",
@@ -235,20 +207,18 @@ _Z2 = [                                 # central academic / clock-tower belt
 _Z3 = [                                 # girls hostel cluster
     "Meera Bhawan", "Birla Shishu Vihar", "Birla Balika Vidyapeeth", "Saraswati Temple",
 ]
-_Z4_EVE = [                             # evening social zone
+_Z4_EVE = [                             # evening zone
     "Shankar Bhawan", "All Night Canteen", "Akshay Supermarket",
 ]
 _Z4_NIGHT = ["All Night Canteen"]       # late-night subset of Z4
 
-_EXT = [                                # extended bhawan / east zone
+_EXT = [                                # extended bhawan zone
     "Bhagirath Bhawan", "Rana Pratap Bhawan", "Ashok Bhawan", "CVR Bhawan",
     "SAC", "Malviya Bhawan", "Looters", "Vfast",
 ]
-# NOTE: _Z4_EVE, _Z4_NIGHT, and _EXT are defined for documentation / future use.
-# Wire them into _add_slots calls below when ready to apply congestion.
 
 
-# ── Schedule builder ──────────────────────────────────────────────────────────
+# Schedule builder
 
 def _make_slot_entry(nodes: list, k: float) -> dict:
     return {n: k for n in nodes}
@@ -258,11 +228,7 @@ CONGESTION_SCHEDULE: dict[int, dict[str, float]] = {}
 
 
 def _add_slots(start_hhmm: str, end_hhmm: str, nodes: list, k: float) -> None:
-    """Mark every 15-min slot in [start_hhmm, end_hhmm) with congestion k.
-
-    Handles midnight wraparound correctly — e.g. '20:00' to '02:00' covers
-    slots 80–95 then 0–7, instead of producing an empty range.
-    """
+    
     s     = _slot(start_hhmm)
     e     = _slot(end_hhmm)
     entry = _make_slot_entry(nodes, k)
@@ -272,7 +238,7 @@ def _add_slots(start_hhmm: str, end_hhmm: str, nodes: list, k: float) -> None:
         CONGESTION_SCHEDULE.setdefault(idx, {}).update(entry)
 
 
-# ── Congestion windows ────────────────────────────────────────────────────────
+#Congestion windows
 
 # 07:45–08:00  morning rush — academic zone + central belt + girls hostels
 _add_slots("07:45", "08:00", ["FD1", "Food Ministry", "New Workshop",
@@ -316,7 +282,7 @@ for start, end in [
     _add_slots(start, end, ["Bhagirath Bhawan", "Rana Pratap Bhawan",
                              "Ashok Bhawan", "CVR Bhawan"], 2.0)
 
-# 16:45–18:00  evening rush — social zone
+# 16:45–18:00 - evening rush
 for start, end in [("16:45", "17:00"), ("17:45", "18:00")]:
     _add_slots(start, end, ["Shankar Bhawan", "All Night Canteen",
                              "Akshay Supermarket", "SAC", "Vfast", "Looters"], 2.0)
@@ -324,16 +290,13 @@ for start, end in [("16:45", "17:00"), ("17:45", "18:00")]:
 # 18:00–19:00  post-class ANC + SAC + Vfast surge
 _add_slots("18:00", "19:00", ["All Night Canteen", "SAC", "Vfast", "Looters"], 2.0)
 
-# 20:00–02:00  night canteen light rush (wraparound midnight)
+# 20:00–02:00  night canteen light rush
 _add_slots("20:00", "02:00", ["All Night Canteen", "Food Ministry", "Looters"], 1.4)
 
 # 21:00–23:00  Cnot light rush
 _add_slots("21:00", "23:00", ["Cnot"], 1.3)
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# GRAPH STATISTICS  (computed once at import time)
-# ─────────────────────────────────────────────────────────────────────────────
+# GRAPH STATISTICS
 
 def _compute_stats() -> dict:
     from collections import defaultdict
