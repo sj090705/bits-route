@@ -370,8 +370,13 @@ def td_astar(graph: CampusGraph, source: str, goal: str,
 def _get_heuristic(graph: CampusGraph,
                    name: str) -> Callable[[str, str], float]:
     """Return the named heuristic function bound to the graph."""
+    
     if name == "haversine":
         return graph.h_haversine
+    
+    elif name == "euclidean":
+        return graph.h_euclidean   
+    
     else:
         raise ValueError(f"Unknown heuristic '{name}'. ")
 
