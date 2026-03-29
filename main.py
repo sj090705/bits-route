@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from campus_graph import CampusGraph
 from algorithms import bfs, ucs, greedy, astar, td_astar
-from visualisation import (draw_graph, plot_comparison, plot_empirical_vs_theory)
+from visualisation import (draw_graph, draw_multistop, plot_comparison, plot_empirical_vs_theory)
 from empirical_validation import run_valid, THEORY
 from collections import defaultdict
 
@@ -151,16 +151,18 @@ def print_results(route):
 
 def save_visuals(graph, route, dep_time):
     safe = dep_time.replace(":", "")
-    for i, leg in enumerate(route["legs"]):
-        if not leg.path:
-            continue
-        fname = f"{OUT}/user_leg{i+1}_{safe}.png"
-        src, dst = route["stops"][i], route["stops"][i + 1]
-        draw_graph(graph, leg,
-                   title=f"TD-A* Leg {i+1}: {src} -> {dst} "
-                         f"[dep {route['times'][i]}]",
-                   save_path=fname)
-        p(f"  Saved -> {fname}")
+
+    fname = f"{OUT}/multistop_{safe}.png"
+
+    draw_multistop(
+        graph,
+        route,
+        title=f"TD-A* Multi-stop Route [dep {dep_time}]",
+        save_path=fname
+    )
+
+    p(f"  Saved -> {fname}")
+
 
 
 def interactive(graph):
