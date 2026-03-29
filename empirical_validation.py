@@ -5,13 +5,12 @@ from algorithms import SearchResult
 
 N = 40  # total nodes in the campus graph
 THEORY = {
-    "BFS":                  N,   
-    "UCS":                  N,   
-    "Greedy (haversine)":   25, 
-    "Greedy (euclidean)":   25,  
-    "A* (haversine)":       22,  
-    "A* (euclidean)":       22,  
-}
+    "BFS": N,
+    "UCS": N,
+    "Greedy (haversine)": 25,
+    "Greedy (euclidean)": 25,
+    "A* (haversine)": 22,
+    "A* (euclidean)": 22,}
 
 def run_valid(results: list[SearchResult]) -> dict[str, int]:
     empirical = {}
@@ -29,5 +28,4 @@ def run_valid(results: list[SearchResult]) -> dict[str, int]:
         ratio = emp_val / theory_val
         print(f"  {algo:<25} {emp_val:>9}  {theory_val:>7}  {ratio:>6.2f}x")
     print()
-
     return empirical
