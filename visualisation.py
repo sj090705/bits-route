@@ -41,6 +41,7 @@ NODE_GOAL = "#3590FF"    # blue
 EDGE_DEFAULT = "#90A4AE"
 EDGE_PATH = "#FF56B6"
 
+NODE_WAYPOINT = "#FF9800"   # orange for intermediate stops
 
 # Coordinate projection → plot positions
 def _get_positions(coords: dict) -> dict[str, tuple[float, float]]:
@@ -157,6 +158,109 @@ def draw_graph(graph: CampusGraph, result: SearchResult, title: str = "", save_p
 
     plt.tight_layout()
     fname = save_path or f"path_{result.algorithm.split()[0].lower()}.png"
+    plt.savefig(fname, dpi=150, bbox_inches="tight")
+    print(f"  Saved: {fname}")
+    plt.close()
+
+def advance_time(hhmm, metres, speed_mpm=80.0):
+    hh, mm = int(hhmm[:2]), int(hhmm[3:])
+    total_min = int(hh * 60 + mm + metres / speed_mpm)
+    return f"{(total_min // 60) % 24:02d}:{total_min % 60:02d}"
+
+def draw_multistop(graph: CampusGraph, route_data: dict,title: str = "", save_path: str = None) -> None:
+    pos   = _get_positions(graph.coords)
+    stops = route_data["stops"]
+    legs  = route_data["legs"]
+ 
+    fig, ax = plt.subplots(figsize=(14, 10))
+    ax.set_facecolor("#F5F5F5")
+    fig.patch.set_facecolor("#FAFAFA")
+ 
+    edge_to_leg = {}
+    for leg_idx, leg in enumerate(legs):
+        for i in range(len(leg.path) - 1):
+            u, v = leg.path[i], leg.path[i + 1]
+            edge_to_leg[(u, v)] = leg_idx
+            edge_to_leg[(v, u)] = leg_idx
+ 
+    all_path_nodes = set()
+    for leg in legs:
+        all_path_nodes.update(leg.path)
+ 
+    for u, v, _ in EDGES:
+        if u not in pos or v not in pos:
+            continue
+        x0, y0 = pos[u]; x1, y1 = pos[v]
+        leg_idx = edge_to_leg.get((u, v), edge_to_leg.get((v, u), None))
+        if leg_idx is not None:
+            color = EDGE_PATH
+            ax.plot([x0, x1], [y0, y1], color=color, linewidth=3.0, zorder=2, alpha=0.9)
+        else:
+            ax.plot([x0, x1], [y0, y1], color=EDGE_DEFAULT, linewidth=0.8, zorder=0, alpha=0.4)
+ 
+    for leg_idx, leg in enumerate(legs):
+        color = color = EDGE_PATH
+        for i in range(len(leg.path) - 1):
+            u, v = leg.path[i], leg.path[i + 1]
+            if u in pos and v in pos:
+                ax.annotate("", xy=pos[v], xytext=pos[u], arrowprops=dict(arrowstyle="->", color=color, lw=2.0), zorder=5)
+ 
+    for name, (x, y) in pos.items():
+        if name == stops[0]:       
+            c, s, z = NODE_SOURCE, 200, 5
+        elif name == stops[-1]:   
+            c, s, z = NODE_GOAL,200, 5
+        elif name in stops[1:-1]:    
+            c, s, z = NODE_WAYPOINT, 170, 4
+        elif name in all_path_nodes: 
+            c, s, z = NODE_PATH, 130, 3
+        else:
+            c, s, z = NODE_DEFAULT, 70, 2
+ 
+        ax.scatter(x, y, s=s, color=c, edgecolors="#37474F", linewidths=0.8, zorder=z)
+ 
+        label_offsets = {"Library": (6, 8), "New Workshop": (-12, -10), "Main Gate": (-12, -10)}
+        dx, dy = label_offsets.get(name, (4, 4))
+        bold = name in all_path_nodes
+        ax.annotate(name, (x, y), textcoords="offset points", xytext=(dx, dy),
+                    fontsize=7.5 if bold else 5.5, fontweight="bold" if bold else "normal", color="#212121", zorder=6)
+ 
+        if name in stops:
+            idx = stops.index(name)
+            ax.text(x, y, str(idx + 1), ha="center", va="center",fontsize=7, fontweight="bold", color="white", zorder=7)
+ 
+    legend_els = [
+        mpatches.Patch(color=NODE_SOURCE, label=f"1. {stops[0]} (start)"),
+        mpatches.Patch(color=NODE_GOAL, label=f"{len(stops)}. {stops[-1]} (end)"),
+    ]
+    for i, wp in enumerate(stops[1:-1], 2):
+        legend_els.append(mpatches.Patch(color=NODE_WAYPOINT, label=f"{i}. {wp} (waypoint)"))
+    
+    ax.legend(handles=legend_els, fontsize=7.5, framealpha=0.9, bbox_to_anchor=(0, 1.02, 1, 0.1),loc="lower left", ncol=2,mode="expand",borderaxespad=0)
+ 
+    total_cost = route_data["total_cost"]
+    total_hops = route_data["total_hops"]
+    total_exp  = sum(l.nodes_expanded for l in legs)
+
+    ax.text(0.98, 0.98,
+        f"Total dist: {total_cost:.1f} m\n"
+        f"Total hops: {total_hops}\n"
+        f"Nodes exp : {total_exp}\n"
+        f"Departure : {route_data['times'][0]}\n"
+        f"Arrival   : {advance_time(route_data['times'][0], total_cost)}",
+        transform=ax.transAxes, va="top", ha="right",
+        fontsize=6,
+        bbox=dict(boxstyle="round,pad=0.4", facecolor="white", alpha=0.85))
+ 
+    ax.set_title("")
+    fig.text(0.5, 0.01, title or f"TD-A* Multi-Stop Route  ({len(stops)} stops)", ha="center", fontsize=12, fontweight="bold")
+    ax.set_xlabel("East-West (metres from Clock Tower)")
+    ax.set_ylabel("North-South (metres from Clock Tower)")
+    ax.set_aspect("equal")
+    plt.tight_layout()
+ 
+    fname = save_path or "multistop_route.png"
+    plt.subplots_adjust(top=0.88, bottom=0.08)
     plt.savefig(fname, dpi=150, bbox_inches="tight")
     print(f"  Saved: {fname}")
     plt.close()
