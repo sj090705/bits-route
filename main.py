@@ -1,26 +1,9 @@
-"""main.py
-
-BITS Pilani Campus Navigator
-Uses Time-Dependent A* (TD-A*) with Haversine heuristic by default.
-
-TD-A* works like regular A* — it expands the node with the lowest
-f(n) = g(n) + h(n) — but edge weights are multiplied by a congestion
-factor k(t) that changes with the time of day. This means the algorithm
-automatically avoids congested corridors during rush hours and finds a
-cheaper route even if it is physically longer.
-
-    python main.py                  # full benchmark, then interactive prompt
-    python main.py --interactive    # skip benchmark, go straight to routing
-"""
-
 import os, sys, re
 sys.path.insert(0, os.path.dirname(__file__))
-
 from campus_graph import CampusGraph
 from algorithms import bfs, ucs, greedy, astar, td_astar
-from visualisation import (draw_graph, draw_multistop, plot_comparison, plot_empirical_vs_theory)
+from visualisation import (draw_graph, plot_comparison, plot_empirical_vs_theory,draw_multistop,)
 from empirical_validation import run_valid, THEORY
-from collections import defaultdict
 
 OUT = "outputs"
 os.makedirs(OUT, exist_ok=True)
@@ -37,7 +20,6 @@ def pick_node(graph, prompt):
 
     while True:
         raw = input(f"\n  {prompt} (number or name): ").strip()
-        #   as integer index 
         if raw.isdigit():
             idx = int(raw) - 1
             if 0 <= idx < len(nodes):
@@ -62,7 +44,6 @@ def pick_node(graph, prompt):
         else:
             p(f"  No match for '{raw}'. Try again.")
 
-
 def pick_time():
     while True:
         raw = input("\n  Departure time HH:MM [Enter = 09:00]: ").strip()
@@ -76,39 +57,15 @@ def pick_time():
                 return raw
         p("  Use format HH:MM, e.g. 08:30")
 
-
 def advance_time(hhmm, metres, speed_mpm=80.0):
-    """
-    Return estimated arrival time given departure time and distance.
-
-    Walking speed default = 80 m/min (approx 4.8 km/h).
-    This is used so each leg of a multi-stop route starts at the correct
-    time slot -- important for TD-A* to pick the right congestion factor.
-    """
     hh, mm = int(hhmm[:2]), int(hhmm[3:])
-    arrived = hh * 60 + mm + metres / speed_mpm
-    return f"{int(arrived//60)%24:02d}:{int(arrived%60):02d}"
-
+    total_min = int(hh * 60 + mm + metres / speed_mpm)  
+    return f"{(total_min // 60) % 24:02d}:{total_min % 60:02d}"
 
 def run_leg(graph, src, dst, dep_time):
-    """
-    Run TD-A* on one (src -> dst) leg departing at dep_time.
-
-    TD-A* state = (node, time_slot).
-    f(n, t) = g(n, t)  +  h(n)
-            = cumulative w_eff cost  +  Haversine straight-line to goal
-
-    w_eff(edge, t) = max(k(u, t), k(v, t)) * w_base
-    where k >= 1.0 is the congestion factor for that zone at that 15-min slot.
-    """
     return td_astar(graph, src, dst, departure_hhmm=dep_time)
 
 def run_route(graph, stops, dep_time):
-    """
-    Decompose stops = [A, B, C, D] into legs A->B, B->C, C->D.
-    Run TD-A* on each leg, advancing the clock between legs so the congestion schedule is correct at each stage.
-     Returns dict with per-leg results and overall totals.
-    """
     legs, full_path, total_cost, total_hops, times = [], [], 0.0, 0, []
     t = dep_time
 
@@ -122,13 +79,11 @@ def run_route(graph, stops, dep_time):
             full_path += res.path if not full_path else res.path[1:]
             total_cost += res.cost
             total_hops += len(res.path) - 1
-            # Advance clock for next leg
             t = advance_time(t, res.cost)
         else:
             p(f"  No path found: {src} -> {dst}")
 
     return {"legs": legs, "times": times, "stops": stops, "full_path": full_path, "total_cost": total_cost,"total_hops": total_hops}
-
 
 def print_results(route):
     p()
@@ -148,32 +103,17 @@ def print_results(route):
         p(f"  TOTAL  {route['total_cost']:.1f} m  over {route['total_hops']} hops")
         p(f"  Full path: {' -> '.join(route['full_path'])}")
 
-
 def save_visuals(graph, route, dep_time):
-    safe = dep_time.replace(":", "")
-
-    fname = f"{OUT}/multistop_{safe}.png"
-
-    draw_multistop(
-        graph,
-        route,
-        title=f"TD-A* Multi-stop Route [dep {dep_time}]",
-        save_path=fname
-    )
-
-    p(f"  Saved -> {fname}")
-
-
+    safe  = dep_time.replace(":", "")
+    stops = route["stops"]
+    fname_png = f"{OUT}/user_route_{safe}.png"
+    if len(route["legs"]) == 1:
+        draw_graph(graph, route["legs"][0],title=f"TD-A*: {stops[0]} -> {stops[-1]}  [dep {dep_time}]",save_path=fname_png)
+    else:
+        draw_multistop(graph, route, title=f"TD-A* Multi-Stop Route  ({len(stops)} stops, dep {dep_time})", save_path=fname_png)
+    p(f"  PNG -> {fname_png}")
 
 def interactive(graph):
-    """
-    3-step interactive route planner:
-      1. Start + optional intermediate stops + destination
-      2. Departure time
-      Then runs TD-A* and prints/saves results.
-    """
-    bar("INTERACTIVE ROUTE PLANNER ")
-
     nodes = sorted(graph.nodes)
     p("\n  Step 1 - Start location")
     start = pick_node(graph, "Start")
@@ -181,7 +121,7 @@ def interactive(graph):
     p("\n  Step 2 - Intermediate stops (press Enter to skip)")
     waypoints = []
     while True:
-        raw = input(f"  Add stop {len(waypoints)+1} (or Enter to finish): ").strip()
+        raw = input(f"  Add stop {len(waypoints)+1} (or Enter to choose desination): ").strip()
         if raw == "":
             break
         node = None
@@ -214,7 +154,6 @@ def interactive(graph):
         p(" Already in route. Choose a different destination.")
 
     stops = [start] + waypoints + [dest]
-
     dep_time = pick_time()
 
     p()
@@ -245,29 +184,18 @@ def user_benchmark(graph, stops, dep_time):
     r_ah_h  = astar(graph, SRC, DST, "haversine")
     r_ah_e  = astar(graph, SRC, DST, "euclidean")
     r_td  = td_astar(graph, SRC, DST, departure_hhmm=dep_time)
-
     results = [r_bfs, r_ucs, r_gr_h, r_gr_e, r_ah_h, r_ah_e, r_td]
-    
     for r in results:
-        p(f"  {r.algorithm:<30} exp={r.nodes_expanded:>3}  "
+        p(f"  {r.algorithm:<25} exp={r.nodes_expanded:>3}  "
           f"cost={r.cost:>8.1f} m  hops={len(r.path)-1}")
 
-    plot_comparison(results,save_path=f"{OUT}/comparison_user.png")
-
-    records = []
-    for r in results:
-        if r.path:
-            records.append({ "algorithm": r.algorithm,
-                "nodes_expanded": r.nodes_expanded, "found": True
-            })
-
-    emp = {r["algorithm"]: r["nodes_expanded"] for r in records if r["algorithm"] in THEORY}
-
-    plot_empirical_vs_theory(emp,
-                             {a: THEORY[a] for a in emp},
-                             query_label=f"{SRC} -> {DST}",
-                             save_path=f"{OUT}/empirical_vs_theory_user.png")
- 
+    plot_comparison(results, save_path=f"{OUT}/comparison_user.png")
+    emp = run_valid(results)
+    plot_empirical_vs_theory(
+        emp,
+        {a: THEORY[a] for a in emp}, save_path=f"{OUT}/empirical_vs_theory_user.png"
+    )
+    
 def main():
     graph = CampusGraph()
 
