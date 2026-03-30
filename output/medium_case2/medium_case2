@@ -1,0 +1,166 @@
+# user window for medium case 2 -- Source: Akshay Supermarket, Stop 1: Vyas Bhawan, Stop 2: Gandhi Bhawan, Goal: Lecture Theatre Complex, Departure: 11:43
+#continued from medium case 1
+
+Plan another route? [Y/N]: y
+
+  Step 1 - Start location
+
+  Locations:
+      1.  ANC Circle
+      2.  Akshay Supermarket
+      3.  All Night Canteen
+      4.  Ashok Bhawan
+      5.  Ashok Circle
+      6.  BET-TACT
+      7.  Bhagirath Bhawan
+      8.  Birla Balika Vidyapeeth
+      9.  Birla Shishu Vihar
+     10.  Budh Bhawan
+     11.  CVR Bhawan
+     12.  Clock Tower
+     13.  Cnot
+     14.  FD1
+     15.  FD2
+     16.  FD3
+     17.  Food Ministry
+     18.  Gandhi Bhawan
+     19.  Gandhi Statue
+     20.  Krishna Bhawan
+     21.  Lecture Theatre Complex
+     22.  Library
+     23.  Looters
+     24.  Main Gate
+     25.  Malviya Bhawan
+     26.  Mandir Meera Intersection
+     27.  Meera Bhawan
+     28.  NAB
+     29.  New Workshop
+     30.  PIEDS
+     31.  Patel Statue
+     32.  Ram Bhawan
+     33.  Rana Pratap Bhawan
+     34.  SAC
+     35.  Saraswati Temple
+     36.  Shankar Bhawan
+     37.  Srinivasa Bhawan
+     38.  Vfast
+     39.  Vishwakarma Bhawan
+     40.  Vyas Bhawan
+
+  Start (number or name): akshay
+  > Akshay Supermarket
+
+  Step 2 - Intermediate stops (press Enter to skip)
+  Add stop 1 (or Enter to choose desination): 40
+  > Added: Vyas Bhawan
+  Add stop 2 (or Enter to choose desination): gandhi bhawan
+  > Added: Gandhi Bhawan
+  Add stop 3 (or Enter to choose desination):
+
+  Step 3 - Destination
+
+  Locations:
+      1.  ANC Circle
+      2.  Akshay Supermarket
+      3.  All Night Canteen
+      4.  Ashok Bhawan
+      5.  Ashok Circle
+      6.  BET-TACT
+      7.  Bhagirath Bhawan
+      8.  Birla Balika Vidyapeeth
+      9.  Birla Shishu Vihar
+     10.  Budh Bhawan
+     11.  CVR Bhawan
+     12.  Clock Tower
+     13.  Cnot
+     14.  FD1
+     15.  FD2
+     16.  FD3
+     17.  Food Ministry
+     18.  Gandhi Bhawan
+     19.  Gandhi Statue
+     20.  Krishna Bhawan
+     21.  Lecture Theatre Complex
+     22.  Library
+     23.  Looters
+     24.  Main Gate
+     25.  Malviya Bhawan
+     26.  Mandir Meera Intersection
+     27.  Meera Bhawan
+     28.  NAB
+     29.  New Workshop
+     30.  PIEDS
+     31.  Patel Statue
+     32.  Ram Bhawan
+     33.  Rana Pratap Bhawan
+     34.  SAC
+     35.  Saraswati Temple
+     36.  Shankar Bhawan
+     37.  Srinivasa Bhawan
+     38.  Vfast
+     39.  Vishwakarma Bhawan
+     40.  Vyas Bhawan
+
+  Destination (number or name): 21
+  > Lecture Theatre Complex
+
+  Departure time HH:MM [Enter = 09:00]: 11:43
+  > 11:43
+
+  ------------------------------------------------------------
+  Route      : Akshay Supermarket  ->  Vyas Bhawan  ->  Gandhi Bhawan  ->  Lecture Theatre Complex
+  Departure  : 11:43
+  Algorithm  : TD-A* (Haversine, time-dependent weights)
+  ------------------------------------------------------------
+  Run? [Y/N]: y
+
+========================
+  USER ROUTE BENCHMARK
+========================
+  BFS                       exp= 34  cost=   950.4 m  hops=5
+  UCS                       exp= 37  cost=   944.1 m  hops=6
+  Greedy (haversine)        exp=  6  cost=   950.4 m  hops=5
+  Greedy (euclidean)        exp=  6  cost=   950.4 m  hops=5
+  A* (haversine)            exp=  8  cost=   944.1 m  hops=6
+  A* (euclidean)            exp= 37  cost=   944.1 m  hops=6
+  TD-A* (depart 11:43)      exp= 13  cost=   950.4 m  hops=5
+ Saved comparison: outputs/comparison_user.png
+
+============================================================
+  EMPIRICAL vs THEORY — Akshay Supermarket → Lecture Theatre Complex
+============================================================
+  Algorithm                 Empirical   Theory   Ratio
+  ─────────────────────────────────────────────────────
+  BFS                              34       40    0.85x
+  UCS                              37       40    0.93x
+  Greedy (haversine)                6       25    0.24x
+  Greedy (euclidean)                6       25    0.24x
+  A* (haversine)                    8       22    0.36x
+  A* (euclidean)                   37       22    1.68x
+
+  Saved empirical vs theory: outputs/empirical_vs_theory_user.png
+
+===========
+  RESULTS
+===========
+
+  Leg 1: Akshay Supermarket  ->  Vyas Bhawan
+    Depart 11:43  |  Arrive ~11:45  |  170.8 m  |  1 hops  |  2 nodes expanded
+    Path : Akshay Supermarket -> Vyas Bhawan
+  ------------------------------------------------------------
+  Leg 2: Vyas Bhawan  ->  Gandhi Bhawan
+    Depart 11:45  |  Arrive ~11:48  |  306.9 m  |  3 hops  |  4 nodes expanded
+    Path : Vyas Bhawan -> Shankar Bhawan -> Patel Statue -> Gandhi Bhawan
+  ------------------------------------------------------------
+  Leg 3: Gandhi Bhawan  ->  Lecture Theatre Complex
+    Depart 11:48  |  Arrive ~11:57  |  729.4 m  |  4 hops  |  6 nodes expanded
+    Path : Gandhi Bhawan -> Bhagirath Bhawan -> Vishwakarma Bhawan -> FD1 -> Lecture Theatre Complex
+  ------------------------------------------------------------
+  TOTAL  1207.1 m  over 8 hops
+  Full path: Akshay Supermarket -> Vyas Bhawan -> Shankar Bhawan -> Patel Statue -> Gandhi Bhawan -> Bhagirath Bhawan -> Vishwakarma Bhawan -> FD1 -> Lecture Theatre Complex        
+  Saved: outputs/user_route_1143.png
+  PNG -> outputs/user_route_1143.png
+
+  Plan another route? [Y/N]: n
+
+  Goodbye.
