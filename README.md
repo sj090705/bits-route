@@ -1,4 +1,4 @@
-# Multi-criteria Route Planning System - BITS Pilani
+# Multi-Criteria Route Planning System — BITS Pilani
 
 A pathfinding system for navigating the BITS Pilani campus using classical AI search algorithms, with a primary focus on **Time-Dependent A\*** (TD-A\*) that adapts routes based on real-world congestion patterns.
 
@@ -6,7 +6,7 @@ A pathfinding system for navigating the BITS Pilani campus using classical AI se
 
 ## Overview
 
-The navigator models the BITS Pilani campus as a weighted, undirected graph of **40 nodes** (landmarks, hostels, academic buildings, amenities) connected by **GPS-verified edges** measured in metres. Five search algorithms are implemented and benchmarked against each other, with TD-A\* as the default for interactive routing.
+The navigator models the BITS Pilani campus as a weighted, undirected graph of **40 nodes** (landmarks, hostels, academic buildings, amenities) connected by **GPS-verified edges** measured in metres. Seven algorithm variants are implemented and benchmarked against each other, with TD-A\* as the default for interactive routing.
 
 The key feature is **time-dependent edge weighting**: edge costs are multiplied by a congestion factor `k(t)` that varies across 15-minute slots throughout the day. This means the planner automatically routes around crowded corridors during rush hours, even if the alternative path is physically longer.
 
@@ -22,7 +22,7 @@ bits-route-main/
 ├── graph_data.py            # Node coordinates, edges (metres), congestion schedule
 ├── empirical_validation.py  # Benchmark queries + theoretical complexity comparison
 ├── visualisation.py         # Graph drawing, path animation, comparison charts
-└── outputs/                 # Auto-created — PNGs saved here
+└── outputs/                 # Auto-created — PNGs and CSVs saved here
 ```
 
 ---
@@ -37,7 +37,7 @@ bits-route-main/
 | **Greedy (euclidean)** | Lowest `h(n)` first | No | Yes | Flat-Earth variant; near-identical to haversine at campus scale |
 | **A\* (haversine)** | Lowest `f(n) = g(n) + h(n)` | Yes | Yes | Admissible & consistent Haversine heuristic |
 | **A\* (euclidean)** | Lowest `f(n) = g(n) + h(n)` | Yes | Yes | Flat-Earth projection; admissible & consistent |
-| **TD-A\*** | A\* with time-dependent edge weights | Yes\* | Yes | Default algorithm; congestion-aware |
+| **TD-A\*** | A\* with time-dependent edge weights | Yes* | Yes | Default algorithm; congestion-aware |
 
 \* Optimal within the time-dependent cost model.
 
@@ -94,7 +94,7 @@ No other dependencies are needed — all search algorithms use only the Python s
 python main.py
 ```
 
-The interactive session walks you through three steps:
+The interactive session walks you through four steps:
 
 1. **Start location** — pick by number or type a name (partial matches work)
 2. **Intermediate stops** — add optional waypoints; press Enter when done
@@ -110,24 +110,33 @@ The planner then runs TD-A\* on each leg, advances the clock between legs so con
   > Meera Bhawan
 
   Step 2 - Intermediate stops (press Enter to skip)
-  Add stop 1 (or Enter to finish):
+  Add stop 1 (or Enter to choose destination):
 
   Step 3 - Destination
   > Library
 
   Departure time HH:MM [Enter = 09:00]: 08:30
 
-  Route     : Meera Bhawan  ->  Library
-  Algorithm : TD-A* (Haversine, time-dependent weights)
+  Route      : Meera Bhawan  ->  Library
+  Departure  : 08:30
+  Algorithm  : TD-A* (Haversine, time-dependent weights)
 
   Run? [Y/N]: Y
 ```
 
 **Output:**
 - Console summary: path, distance (metres), estimated arrival time, nodes expanded
-- `outputs/user_leg<N>_<time>.png` — graph visualisation with highlighted path
-- `outputs/comparison_user.png` — bar chart comparing all 5 algorithms
+- `outputs/user_route_<HHMM>.png` — campus graph visualisation with highlighted path (multi-stop aware)
+- `outputs/comparison_user.png` — bar chart comparing all 7 algorithm variants
 - `outputs/empirical_vs_theory_user.png` — empirical vs theoretical node expansions
+
+### Multi-Stop Routes
+
+Add waypoints at Step 2 to chain multiple legs. The planner:
+- Runs TD-A\* independently on each leg
+- Advances the departure clock by estimated walking time before each subsequent leg
+- Concatenates all legs into a single full path for visualisation
+- Prints per-leg and aggregate totals (total metres, total hops)
 
 ---
 
@@ -162,7 +171,7 @@ Each edge stores a **base weight in metres** derived from Haversine-verified GPS
 | A\* (haversine) | ~18 | Typical `O(b·d)` with good heuristic |
 | A\* (euclidean) | ~18 | Same complexity class as haversine |
 
-Results are saved to `empirical_results.csv` and plotted as `empirical_vs_theory.png`.
+Results are saved to `outputs/empirical_results.csv` and plotted as `outputs/empirical_vs_theory.png`.
 
 ---
 
@@ -172,7 +181,7 @@ All output files are written to the `outputs/` directory (created automatically)
 
 | File | Description |
 |---|---|
-| `user_leg<N>_<HHMM>.png` | Campus graph with TD-A\* path for leg N |
+| `user_route_<HHMM>.png` | Campus graph with TD-A\* path; handles single and multi-stop routes |
 | `comparison_user.png` | Algorithm comparison bar chart (nodes expanded, cost) |
 | `empirical_vs_theory_user.png` | Predicted vs actual node expansion scatter plot |
 | `empirical_results.csv` | Raw benchmark data across all query pairs |
@@ -193,6 +202,25 @@ Every algorithm returns a `SearchResult` dataclass:
 | `nodes_generated` | `int` | Nodes added to the frontier |
 | `frontier_log` | `list` | Per-step `{step, node, g, h, f}` records for visualisation |
 | `found` | `bool` | `True` if a path was found |
+
+TD-A\* additionally logs `t_slot` (the time slot at expansion) in each `frontier_log` entry.
+
+---
+
+## CampusGraph API
+
+Key methods on the `CampusGraph` class used by the algorithms:
+
+| Method | Description |
+|---|---|
+| `neighbours(node)` | Returns `[(neighbour, base_weight), ...]` |
+| `neighbours_timed(node, time_slot)` | Returns `[(neighbour, effective_weight), ...]` with congestion applied |
+| `w_eff(u, v, time_slot)` | Effective edge weight at a given time slot |
+| `h_haversine(node, goal)` | Haversine heuristic distance in metres |
+| `h_euclidean(node, goal)` | Euclidean flat-projection heuristic in metres |
+| `hhmm_to_slot(hhmm)` | Converts `"HH:MM"` string to a time slot integer `[0, 95]` |
+| `node_count()` | Total number of nodes |
+| `edge_count()` | Total number of edges |
 
 ---
 
